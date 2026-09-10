@@ -136,10 +136,6 @@
   #app.showDetails #landing{ transform: translateX(-6%); opacity:0; pointer-events:none; }
   #app.showDetails #detailsScreen{ transform: translateX(0); opacity:1; }
 
-  #app.showQuiz #detailsScreen{ transform: translateX(-6%); opacity:0; pointer-events:none; }
-  #app.showQuiz #quizScreen{ transform: translateX(0); opacity:1; }
-
-  #app.showResult #quizScreen{ transform: translateX(-6%); opacity:0; pointer-events:none; }
   #app.showResult #resultScreen{ transform: translateX(0); opacity:1; }
 
   .card-wrap{
@@ -228,120 +224,6 @@
     color:var(--red);
     text-align:center;
     min-height:16px;
-  }
-
-  /* ---------- QUIZ ---------- */
-
-  #quizScreen{ align-items:flex-start; padding-top:56px; padding-bottom:40px; }
-
-  .quiz-wrap{
-    width:100%;
-    max-width:560px;
-    margin:0 auto;
-    display:flex;
-    flex-direction:column;
-    gap:28px;
-  }
-
-  .quiz-head{ text-align:center; }
-  .quiz-head h2{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:2rem;
-    color:var(--cream);
-  }
-  .quiz-head p{
-    color:rgba(251,246,233,0.6);
-    font-size:0.9rem;
-    margin-top:6px;
-  }
-
-  .riddle-block{
-    background:var(--black-soft);
-    border:2px solid rgba(212,175,55,0.18);
-    border-radius:20px;
-    padding:22px;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-
-  .riddle-number{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:linear-gradient(135deg, var(--gold), var(--gold-bright));
-    color:var(--black);
-    font-family:'Baloo 2', sans-serif;
-    font-weight:700;
-    font-size:0.95rem;
-  }
-
-  .riddle-top{
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-
-  .riddle-emoji{ font-size:1.3rem; }
-
-  .riddle-question{
-    font-family:'Baloo 2', sans-serif;
-    font-weight:600;
-    font-size:1.15rem;
-    line-height:1.35;
-    color:var(--cream);
-  }
-
-  .options-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-
-  .option-btn{
-    text-align:center;
-    padding:13px 10px;
-    background:rgba(212,175,55,0.06);
-    border:2px solid rgba(212,175,55,0.22);
-    border-radius:12px;
-    color:var(--cream);
-    font-family:'Inter', sans-serif;
-    font-weight:500;
-    font-size:0.9rem;
-    cursor:pointer;
-    transition: all 0.15s ease;
-  }
-  .option-btn:hover{ border-color:var(--gold); background:rgba(212,175,55,0.14); transform: translateY(-1px); }
-  .option-btn.selected{ border-color:var(--gold-bright); background:rgba(212,175,55,0.25); box-shadow: 0 0 0 2px rgba(255,216,115,0.3) inset; }
-
-  .hint-toggle{
-    align-self:flex-start;
-    background:none;
-    border:none;
-    color:rgba(251,246,233,0.4);
-    font-size:0.8rem;
-    cursor:pointer;
-    transition: color 0.2s ease;
-  }
-  .hint-toggle:hover{ color:var(--gold-bright); }
-
-  .hint-text{
-    font-size:0.82rem;
-    color:rgba(255,216,115,0.8);
-    line-height:1.5;
-    display:none;
-  }
-  .hint-text.show{ display:block; }
-
-  .quiz-submit-wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
   }
 
   /* ---------- RESULT ---------- */
@@ -441,7 +323,6 @@
     h1.title{ font-size:3.6rem; }
     .card-head h2{ font-size:1.8rem; }
     .options-grid{ grid-template-columns:1fr 1fr; }
-    .riddle-question{ font-size:1.05rem; }
   }
 </style>
 </head>
@@ -456,7 +337,7 @@
     <span class="float-deco" style="bottom:22%; right:16%; animation-delay:1.6s;">🎯</span>
     <div class="landing-inner">
       <h1 class="title">RAFFLE</h1>
-      <p class="subtitle">Answer 3 quick riddles about the <strong>Digital Lab</strong> and you're automatically entered to win.</p>
+      <p class="subtitle">Enter your details for a chance to win from the <strong>Digital Lab</strong>.</p>
       <button class="primary-btn" id="startBtn">Let's go 🎉</button>
     </div>
   </div>
@@ -484,31 +365,13 @@
           <input type="tel" id="phone" placeholder="(615) 555-0134" autocomplete="tel" />
           <div class="field-error" id="phoneError"></div>
         </div>
-        <button type="submit" class="submit-btn" id="toQuizBtn" style="margin-top:20px; width:100%;">On to the riddles 🧩</button>
+        <button type="submit" class="submit-btn" id="submitEntryBtn" style="margin-top:20px; width:100%;">Enter raffle 🎟️</button>
       </form>
-    </div>
-  </div>
-
-  <div class="screen card-screen" id="quizScreen">
-    <div class="quiz-wrap">
-      <button class="back-btn" id="backToDetails">&larr; Back</button>
-      <div class="quiz-head">
-        <h2>Three riddles</h2>
-        <p>Pick an answer for each — hints are there if you need them.</p>
-      </div>
-
-      <div id="riddlesContainer"></div>
-
-      <div class="quiz-submit-wrap">
-        <p class="form-error" id="quizError"></p>
-        <button class="submit-btn" id="submitQuizBtn" style="width:100%; max-width:320px;">Submit & enter raffle 🎟️</button>
-      </div>
     </div>
   </div>
 
   <div class="screen" id="resultScreen">
     <div class="result-inner">
-      <div class="score-badge" id="scoreBadge">0/3</div>
       <h2 id="resultTitle">You're in!</h2>
       <p id="resultMsg">Good luck, <strong id="resultName"></strong> — winners are contacted by email.</p>
       <div class="entry-confirm" id="entryConfirm">✅ Saved to the raffle sheet</div>
@@ -520,32 +383,6 @@
 </div>
 
 <script>
-  /* ---------------- data ---------------- */
-
-  const RIDDLES = [
-    {
-      emoji: "📍",
-      question: "Where can you visit the Digital Lab in person?",
-      options: ["Central Library, 4th Floor", "Peabody Library, 3rd Floor", "Sarratt Student Center", "Central Library, 8th Floor"],
-      correctIndex: 0,
-      hint: "It's in the same building as the university's main library, near the top."
-    },
-    {
-      emoji: "🧸",
-      question: "We used AI to catalog episodes of a beloved children's show set on a street. About how many episodes?",
-      options: ["45", "450", "4,500+", "45,000"],
-      correctIndex: 2,
-      hint: "It's a big number — over four thousand."
-    },
-    {
-      emoji: "📺",
-      question: "What year does our TV News Archive begin collecting broadcasts?",
-      options: ["1958", "1968", "1978", "1988"],
-      correctIndex: 1,
-      hint: "Same decade humans first walked on the moon."
-    }
-  ];
-
   const FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd3Eo9nDSXbtG3HV-5fwTpltdCtd10VhEqhKOBe2spl52XAcA/formResponse';
   const FIELD_NAME = 'entry.690974004';
   const FIELD_EMAIL = 'entry.1910741500';
@@ -556,7 +393,6 @@
   const app = document.getElementById('app');
   const startBtn = document.getElementById('startBtn');
   const backToLanding = document.getElementById('backToLanding');
-  const backToDetails = document.getElementById('backToDetails');
 
   const detailsForm = document.getElementById('detailsForm');
   const nameInput = document.getElementById('name');
@@ -566,11 +402,6 @@
   const emailError = document.getElementById('emailError');
   const phoneError = document.getElementById('phoneError');
 
-  const riddlesContainer = document.getElementById('riddlesContainer');
-  const submitQuizBtn = document.getElementById('submitQuizBtn');
-  const quizError = document.getElementById('quizError');
-
-  const scoreBadge = document.getElementById('scoreBadge');
   const resultTitle = document.getElementById('resultTitle');
   const resultMsg = document.getElementById('resultMsg');
   const resultName = document.getElementById('resultName');
@@ -578,20 +409,14 @@
   const doneBtn = document.getElementById('doneBtn');
   const redirectNote = document.getElementById('redirectNote');
 
-  let answers = new Array(RIDDLES.length).fill(null);
   /* ---------------- navigation ---------------- */
 
   function goLanding(){
-    app.classList.remove('showDetails','showQuiz','showResult');
+    app.classList.remove('showDetails','showResult');
   }
   function goDetails(){
     app.classList.add('showDetails');
-    app.classList.remove('showQuiz','showResult');
-  }
-  function goQuiz(){
-    app.classList.add('showQuiz');
     app.classList.remove('showResult');
-    renderRiddles();
   }
   function goResult(){
     app.classList.add('showResult');
@@ -599,7 +424,6 @@
 
   startBtn.addEventListener('click', goDetails);
   backToLanding.addEventListener('click', goLanding);
-  backToDetails.addEventListener('click', () => { app.classList.remove('showQuiz'); });
 
   /* ---------------- details form ---------------- */
 
@@ -615,7 +439,7 @@
     return digits.length >= 7 && digits.length <= 15;
   }
 
-  detailsForm.addEventListener('submit', (e) => {
+  detailsForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearFormErrors();
     let ok = true;
@@ -641,75 +465,9 @@
     }
 
     if(!ok) return;
-    goQuiz();
-  });
-
-  /* ---------------- quiz ---------------- */
-
-  function renderRiddles(){
-    answers = new Array(RIDDLES.length).fill(null);
-    quizError.textContent = '';
-    riddlesContainer.innerHTML = '';
-
-    RIDDLES.forEach((r, qi) => {
-      const block = document.createElement('div');
-      block.className = 'riddle-block';
-
-      const top = document.createElement('div');
-      top.className = 'riddle-top';
-      top.innerHTML = `<span class="riddle-number">${qi + 1}</span><span class="riddle-emoji">${r.emoji}</span>`;
-      block.appendChild(top);
-
-      const q = document.createElement('div');
-      q.className = 'riddle-question';
-      q.textContent = r.question;
-      block.appendChild(q);
-
-      const grid = document.createElement('div');
-      grid.className = 'options-grid';
-      r.options.forEach((opt, oi) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'option-btn';
-        btn.textContent = opt;
-        btn.addEventListener('click', () => {
-          answers[qi] = oi;
-          grid.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          quizError.textContent = '';
-        });
-        grid.appendChild(btn);
-      });
-      block.appendChild(grid);
-
-      const hintToggle = document.createElement('button');
-      hintToggle.type = 'button';
-      hintToggle.className = 'hint-toggle';
-      hintToggle.textContent = 'Need a hint?';
-      const hintText = document.createElement('p');
-      hintText.className = 'hint-text';
-      hintText.textContent = r.hint;
-      hintToggle.addEventListener('click', () => {
-        const showing = hintText.classList.toggle('show');
-        hintToggle.textContent = showing ? 'Hide hint' : 'Need a hint?';
-      });
-      block.appendChild(hintToggle);
-      block.appendChild(hintText);
-
-      riddlesContainer.appendChild(block);
-    });
-  }
-
-  submitQuizBtn.addEventListener('click', async () => {
-    if(answers.some(a => a === null)){
-      quizError.textContent = 'Pick an answer for every riddle first.';
-      return;
-    }
-
-    const score = answers.reduce((acc, a, i) => acc + (a === RIDDLES[i].correctIndex ? 1 : 0), 0);
-
-    submitQuizBtn.disabled = true;
-    submitQuizBtn.textContent = 'Submitting...';
+    const submitEntryBtn = document.getElementById('submitEntryBtn');
+    submitEntryBtn.disabled = true;
+    submitEntryBtn.textContent = 'Submitting...';
 
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
@@ -738,25 +496,17 @@
       entryConfirm.textContent = "⚠️ Couldn't save — check your connection";
     }
 
-    submitQuizBtn.disabled = false;
-    submitQuizBtn.textContent = 'Submit & enter raffle 🎟️';
+    submitEntryBtn.disabled = false;
+    submitEntryBtn.textContent = 'Enter raffle 🎟️';
 
-    showResult(score, name);
+    showResult(name);
   });
 
   /* ---------------- result ---------------- */
 
-  function showResult(score, name){
-    scoreBadge.textContent = `${score}/${RIDDLES.length}`;
+  function showResult(name){
     resultName.textContent = name.split(' ')[0];
-
-    if(score === RIDDLES.length){
-      resultTitle.textContent = "Perfect score — you're in! 🎉";
-    } else if(score >= 1){
-      resultTitle.textContent = "You're entered! 🎉";
-    } else {
-      resultTitle.textContent = "Entered anyway — nice try! 🎉";
-    }
+    resultTitle.textContent = "You're entered! 🎉";
 
     goResult();
     launchConfetti();
