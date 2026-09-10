@@ -512,7 +512,7 @@
       <h2 id="resultTitle">You're in!</h2>
       <p id="resultMsg">Good luck, <strong id="resultName"></strong> — winners are contacted by email.</p>
       <div class="entry-confirm" id="entryConfirm">✅ Saved to the raffle sheet</div>
-      <button class="again-btn" id="doneBtn">Done</button>
+      <button class="again-btn" id="doneBtn">Submit another response</button>
       <p class="redirect-note" id="redirectNote"></p>
     </div>
   </div>
@@ -579,15 +579,10 @@
   const redirectNote = document.getElementById('redirectNote');
 
   let answers = new Array(RIDDLES.length).fill(null);
-  let redirectTimer = null;
-  let redirectInterval = null;
-
   /* ---------------- navigation ---------------- */
 
   function goLanding(){
     app.classList.remove('showDetails','showQuiz','showResult');
-    clearTimeout(redirectTimer);
-    clearInterval(redirectInterval);
   }
   function goDetails(){
     app.classList.add('showDetails');
@@ -765,17 +760,7 @@
 
     goResult();
     launchConfetti();
-
-    let secondsLeft = 5;
-    redirectNote.textContent = `Returning to the raffle page in ${secondsLeft}...`;
-    clearInterval(redirectInterval);
-    redirectInterval = setInterval(() => {
-      secondsLeft -= 1;
-      if(secondsLeft > 0) redirectNote.textContent = `Returning to the raffle page in ${secondsLeft}...`;
-    }, 1000);
-
-    clearTimeout(redirectTimer);
-    redirectTimer = setTimeout(finishAndReturn, 5000);
+    redirectNote.textContent = 'Your response is submitted. Stay here or submit another response below.';
   }
 
   function finishAndReturn(){
